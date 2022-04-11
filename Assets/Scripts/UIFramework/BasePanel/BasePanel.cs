@@ -6,6 +6,11 @@ using UnityEngine;
 public abstract class BasePanel
 {
     public UIType UIType { get; private set; }
+
+    public BasePanel(UIType uIType)
+    {
+        UIType = UIType;
+    }
     //UI进入的时候执行的操作
     public virtual void OnEnter() { }
     //UI暂停时执行的操作
