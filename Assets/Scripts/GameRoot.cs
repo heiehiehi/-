@@ -4,48 +4,54 @@ using UnityEngine;
 
 public class GameRoot : MonoBehaviour
 {
-    private UIManager UIManager;
-    public UIManager UIManager_Root
-    {
-        get => UIManager;
-    }
-    private SceneControl SceneControl;
-    public SceneControl SceneControl_Root
-    {
-        get => SceneControl;
-    }
-
     private static GameRoot instance;
-    public static GameRoot GetInstacne()
+
+    private UIManager UIManager;
+
+    public UIManager UIManager_Root;
+
+    private SceneControl SceneControl;
+    public SceneControl SceneControl_Root { get => SceneControl; }
+
+    public static GameRoot GetInstance() 
     {
-        if(instance == null)
+        if (instance == null)  
         {
-            Debug.LogError("CameRoot获得实例失败");
+            Debug.LogWarning("GameRoot Ins is false!");
             return instance;
         }
+
         return instance;
     }
+
     private void Awake()
     {
-        if (instance == null)
+        if (instance == null) 
         {
             instance = this;
         }
-        else
+        else 
         {
             Destroy(this.gameObject);
         }
 
         UIManager = new UIManager();
+        UIManager_Root = UIManager;
         SceneControl = new SceneControl();
     }
-    private void Start()
-    {
-        DontDestroyOnLoad(this.gameObject);
-        UIManager_Root.CanvasObj = UIMehod.GetInstance().FindCanvas();
 
-        //推入一个面板
+    // Start is called before the first frame update
+    void Start()
+    {
+        DontDestroyOnLoad(this);
+        UIManager_Root.CanvasObj = UIMethods.GetInstance().FindCanvas();
+
         UIManager_Root.Push(new StartPanel());
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         
     }
 }
